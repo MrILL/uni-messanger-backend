@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { TestGlobalProvider } from './common/test/test.provider';
 import { ScyllaDbModule } from './modules/db/scylla-db.module';
 import { UsersModule } from './modules/users/users.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './modules/auth/auth.module';
+import { GlobalJwtModule } from './modules/global-jwt/global-jwt.module';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
     imports: [
@@ -20,8 +25,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
                 },
             }),
         }),
+        GlobalJwtModule,
+        UsersModule,
+        AuthModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService, TestGlobalProvider],
 })
 export class AppModule {}
