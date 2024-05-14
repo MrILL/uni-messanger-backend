@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Test } from 'src/common/test/test.decorator';
@@ -6,7 +6,6 @@ import { Test } from 'src/common/test/test.decorator';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto } from './dtos';
 import { UserEntity } from './user.entity';
-import { ParseUserIdPipe } from './pipes/user-id.pipe';
 
 @Controller({
     path: 'users',
@@ -40,7 +39,7 @@ export class UsersController {
     @Test()
     @ApiResponse({ status: 200, description: 'User found', type: UserEntity })
     @ApiResponse({ status: 404, description: 'User not found' })
-    async findOne(@Param('userId', ParseUserIdPipe) userId: string): Promise<UserEntity> {
+    async findOne(@Param('userId', ParseUUIDPipe) userId: string): Promise<UserEntity> {
         return this.usersService.findOne(userId);
     }
 
@@ -51,7 +50,7 @@ export class UsersController {
     @ApiResponse({ status: 200, description: 'User updated', type: UserEntity })
     @ApiResponse({ status: 404, description: 'User not found' })
     async update(
-        @Param('userId', ParseUserIdPipe) userId: string,
+        @Param('userId', ParseUUIDPipe) userId: string,
         @Body() updateDto: UpdateUserDto,
     ): Promise<UserEntity> {
         return this.usersService.update(userId, updateDto);
@@ -62,7 +61,7 @@ export class UsersController {
     @Test()
     @ApiResponse({ status: 204, description: 'User deleted' })
     @ApiResponse({ status: 404, description: 'User not found' })
-    async delete(@Param('userId', ParseUserIdPipe) userId: string): Promise<void> {
+    async delete(@Param('userId', ParseUUIDPipe) userId: string): Promise<void> {
         await this.usersService.delete(userId);
     }
 }

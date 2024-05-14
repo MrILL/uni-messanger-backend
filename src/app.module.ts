@@ -9,6 +9,7 @@ import { GlobalJwtModule } from './modules/global-jwt/global-jwt.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ChatsModule } from './modules/chats/chats.module';
 
 @Module({
     imports: [
@@ -28,6 +29,7 @@ import { AppService } from './app.service';
         GlobalJwtModule,
         UsersModule,
         AuthModule,
+        ChatsModule,
     ],
     controllers: [AppController],
     providers: [AppService, TestGlobalProvider],

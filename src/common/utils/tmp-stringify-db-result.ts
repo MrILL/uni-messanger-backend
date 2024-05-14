@@ -20,8 +20,11 @@ const tmpStringifyDbSingleObject = (obj: unknown) => {
  * @returns The converted plain JavaScript object or array of objects.
  */
 export function tmpStringifyDbResult(dbResult: unknown) {
-    const isArray = Array.isArray(dbResult);
+    if (dbResult === null || dbResult === undefined) {
+        return null;
+    }
 
+    const isArray = Array.isArray(dbResult);
     if (isArray) {
         return (dbResult as any[]).map(tmpStringifyDbSingleObject);
     } else {
