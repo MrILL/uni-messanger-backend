@@ -7,6 +7,8 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 
+import { ChatUsersService } from 'src/modules/chat-users/chat-users.service';
+
 import { CreateChatDto, UpdateChatDto } from './dtos';
 import { ChatsRepository } from './chats.repository';
 import { ChatEntity } from './chat.entity';
@@ -15,7 +17,10 @@ import { ChatEntity } from './chat.entity';
 export class ChatsService {
     logger = new Logger(ChatsService.name);
 
-    constructor(private readonly chatsRepository: ChatsRepository) {}
+    constructor(
+        private readonly chatsRepository: ChatsRepository,
+        private readonly chatUsersService: ChatUsersService,
+    ) {}
 
     async create(ownerId: string, createDto: CreateChatDto): Promise<ChatEntity> {
         const checkChatname = await this.chatsRepository.findOneBySlug(createDto.slug);
@@ -33,6 +38,18 @@ export class ChatsService {
             this.logger.error(`Failed to create chat with data: ${JSON.stringify(createDto)}\n${e.message}`, e.stack);
             throw new InternalServerErrorException(`Failed to create chat`);
         }
+
+        try {
+            await this.chatUsersService.addUserToChat(newChatId, { userId: ownerId });
+        } catch (e) {
+            this.logger.error(
+                `Failed to add owner with id:${ownerId} to chat with id:${newChatId}\n${e.message}`,
+                e.stack,
+            );
+            throw new InternalServerErrorException(`Failed to add owner to chat`);
+        }
+
+        // TODO later, add to chat default permissions
 
         return this.chatsRepository.findOneById(newChatId);
     }

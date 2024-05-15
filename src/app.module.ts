@@ -3,13 +3,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { TestGlobalProvider } from './common/test/test.provider';
 import { ScyllaDbModule } from './modules/db/scylla-db.module';
+import { GlobalJwtModule } from './modules/global-jwt/global-jwt.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { GlobalJwtModule } from './modules/global-jwt/global-jwt.module';
+import { ChatsModule } from './modules/chats/chats.module';
+import { ChatUsersModule } from './modules/chat-users/chat-users.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ChatsModule } from './modules/chats/chats.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { ChatsModule } from './modules/chats/chats.module';
         UsersModule,
         AuthModule,
         ChatsModule,
+        ChatUsersModule,
     ],
     controllers: [AppController],
     providers: [AppService, TestGlobalProvider],
