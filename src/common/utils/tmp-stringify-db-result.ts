@@ -1,11 +1,13 @@
 import * as types from 'cassandra-driver/lib/types';
-const { Uuid } = types as any;
+const { Uuid, LocalDate } = types as any;
 
 const tmpStringifyDbSingleObject = (obj: unknown) => {
     return Object.fromEntries(
         Object.entries(obj).map(([key, value]) => {
             if (value instanceof Uuid) {
                 return [key, value.toString()];
+            } else if (value instanceof LocalDate) {
+                return [key, new Date(value.toString())];
             } else {
                 return [key, value];
             }

@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ChatsModule } from './modules/chats/chats.module';
 import { ChatUsersModule } from './modules/chat-users/chat-users.module';
+import { ChatMessagesModule } from './modules/chat-messages/chat-messages.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -32,6 +33,7 @@ import { AppService } from './app.service';
         AuthModule,
         ChatsModule,
         ChatUsersModule,
+        ChatMessagesModule,
     ],
     controllers: [AppController],
     providers: [AppService, TestGlobalProvider],

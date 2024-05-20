@@ -66,6 +66,7 @@ export class UsersService {
     async update(id: string, updateDto: UpdateUserDto): Promise<UserEntity> {
         const user = await this.usersRepository.findOneById(id);
         if (!user) {
+            this.logger.log(`User id:${id} not found for update`);
             throw new NotFoundException(`User id:${id} not found`);
         }
 
@@ -79,9 +80,7 @@ export class UsersService {
         }
         this.logger.debug(`Updated user id:${id}`);
 
-        const res = await this.usersRepository.findOneById(id);
-
-        return res;
+        return this.usersRepository.findOneById(id);
     }
 
     async delete(id: string): Promise<UserEntity> {

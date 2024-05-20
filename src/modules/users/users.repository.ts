@@ -4,7 +4,7 @@ import { Client, types } from 'cassandra-driver';
 import { tmpStringifyDbResult } from 'src/common/utils/tmp-stringify-db-result';
 import { SCYLLA_DB_CLIENT } from 'src/modules/db/scylla-db.constants';
 
-import { CreateUserDto } from './dtos/create-user.dto';
+import { CreateUserDto } from './dtos';
 import { UserEntity } from './user.entity';
 
 @Injectable()
