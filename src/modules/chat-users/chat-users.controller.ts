@@ -11,7 +11,7 @@ import {
     Post,
     UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
 // import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
@@ -29,6 +29,7 @@ import { ChatUserEntity } from './chat-user.entity';
     path: 'chats/:chatId/users',
     version: '1',
 })
+@ApiTags('chat-users')
 export class ChatUsersController {
     constructor(private readonly chatUserService: ChatUsersService) {}
 

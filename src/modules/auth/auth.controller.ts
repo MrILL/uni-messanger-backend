@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserEntity } from 'src/modules/users/user.entity';
 
@@ -10,6 +10,7 @@ import { RegisterDto, LoginDto, JwtDto } from './dtos';
     path: 'auth',
     version: '1',
 })
+@ApiTags('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 

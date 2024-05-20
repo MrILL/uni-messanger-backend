@@ -11,19 +11,22 @@ import {
     Post,
     UseGuards,
 } from '@nestjs/common';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator';
+import { JwtPayload } from 'src/modules/auth/types/jwt-payload';
+import { AuthGuard } from 'src/modules/auth/guards/auth.guard';
+import { IsUserInChatGuard } from 'src/modules/chat-users/guards/is-user-in-chat.guard';
+
 import { ChatMessagesService } from './chat-messages.service';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { CreateChatMessageDto } from './dtos';
 import { ChatMessageEntity } from './chat-message.entity';
-import { CurrentUser } from '../auth/decorators/current-user.decorator';
-import { JwtPayload } from '../auth/types/jwt-payload';
-import { AuthGuard } from '../auth/guards/auth.guard';
-import { IsUserInChatGuard } from '../chat-users/guards/is-user-in-chat.guard';
 
 @Controller({
     path: 'chats/:chatId/messages',
     version: '1',
 })
+@ApiTags('chat-messages')
 export class ChatMessagesController {
     constructor(private readonly chatMessagesService: ChatMessagesService) {}
 
