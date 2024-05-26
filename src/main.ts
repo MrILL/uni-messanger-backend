@@ -24,6 +24,15 @@ async function bootstrap() {
         }),
     );
 
+    app.enableCors({
+        origin: '*', // Allows all origins
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        allowedHeaders: 'Content-Type, Accept',
+        credentials: true, // Allows cookies to be sent with requests
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    });
+
     app.enableVersioning();
 
     const swaggerConfig = new DocumentBuilder()
