@@ -1,3 +1,2 @@
 start_prod:
-	npm run build
-	npm run start:prod
+	docker compose up -d
